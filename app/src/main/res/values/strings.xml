@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">PhotoPlanTask</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="settings">Settings</string>
+    <string name="income_amp_expenses"><![CDATA[Income & Expenses]]></string>
+    <string name="moodboard">Moodboard</string>
+    <string name="locations">ЛОКАЦИИ</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name_section">Название раздела</string>
+    <string name="name_locality">Название локации</string>
+</resources>

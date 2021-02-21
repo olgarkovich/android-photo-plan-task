@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_setting"
+        android:icon="@drawable/settings"
+        android:title="@string/settings" />
+
+    <item
+        android:id="@+id/navigation_expenses"
+        android:icon="@drawable/expenses"
+        android:title="@string/income_amp_expenses" />
+
+    <item
+        android:id="@+id/navigation_moodboard"
+        android:icon="@drawable/moodboard"
+        android:title="@string/moodboard" />
+
+    <item
+        android:id="@+id/navigation_location"
+        android:icon="@drawable/location"
+        android:title="@string/locations" />
+
+</menu>

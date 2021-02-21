@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_location">
+
+    <fragment
+        android:id="@+id/navigation_setting"
+        android:name="com.example.photoplantask.ui.SettingFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/fragment_setting" />
+
+    <fragment
+        android:id="@+id/navigation_expenses"
+        android:name="com.example.photoplantask.ui.ExpensesFragment"
+        android:label="@string/income_amp_expenses"
+        tools:layout="@layout/fragment_expenses" />
+
+    <fragment
+        android:id="@+id/navigation_moodboard"
+        android:name="com.example.photoplantask.ui.MoodboardFragment"
+        android:label="@string/moodboard"
+        tools:layout="@layout/fragment_moodboard" />
+
+    <fragment
+        android:id="@+id/navigation_location"
+        android:name="com.example.photoplantask.ui.LocationFragment"
+        android:label="@string/locations"
+        tools:layout="@layout/fragment_location" />
+</navigation>
