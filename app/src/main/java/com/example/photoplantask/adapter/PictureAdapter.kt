@@ -1,4 +1,4 @@
-package com.example.photoplan.adapter
+package com.example.photoplantask.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -29,7 +29,7 @@ class PictureAdapter(var context: Context, val list: ArrayList<String>) : BaseAd
         return position.toLong()
     }
 
-    @SuppressLint("ViewHolder")
+    @SuppressLint("ViewHolder", "UseCompatLoadingForDrawables")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = View.inflate(context, R.layout.item_picture, null)
         val pictureView = view.findViewById<ImageView>(R.id.pictureView)
@@ -52,17 +52,26 @@ class PictureAdapter(var context: Context, val list: ArrayList<String>) : BaseAd
         }
 
         pictureView.setOnClickListener {
-            Toast.makeText(context, "click", Toast.LENGTH_SHORT).show()
             val myIntent = Intent(context, NextActivity::class.java)
-            myIntent.putExtra("key", imageUrlForFull) //Optional parameters
-
+            myIntent.putExtra("key", imageUrlForFull)
             context.startActivity(myIntent)
         }
 
         pictureView.setOnLongClickListener {
             Toast.makeText(context, "click looong", Toast.LENGTH_SHORT).show()
+            checkDelete.visibility = View.VISIBLE
             return@setOnLongClickListener true
         }
+
+//        checkDelete.setOnClickListener {
+//            Toast.makeText(context, "check", Toast.LENGTH_SHORT).show()
+//            if (checkDelete.background == context.getDrawable(R.drawable.not_selected)) {
+//                checkDelete.setBackgroundResource(R.drawable.selected)
+//            }
+//            else {
+//                checkDelete.setBackgroundResource(R.drawable.not_selected)
+//            }
+//        }
 
         return view
     }

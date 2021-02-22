@@ -14,7 +14,6 @@ class MoodboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_moodboard, container, false)
-        return root
+        return inflater.inflate(R.layout.fragment_moodboard, container, false)
     }
 }

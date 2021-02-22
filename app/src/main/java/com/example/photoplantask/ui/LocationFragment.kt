@@ -4,19 +4,22 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.photoplan.adapter.LocationAdapter
 import com.example.photoplantask.R
+import com.example.photoplantask.adapter.LocationAdapter
+import com.example.photoplantask.data.FirebaseRepository
 import com.example.photoplantask.model.Location
 import com.example.photoplantask.model.Section
+import com.example.photoplantask.tools.LOCATION
+import com.example.photoplantask.tools.SECTION
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -27,21 +30,20 @@ class LocationFragment : Fragment() {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var firebaseStorage: FirebaseStorage
     private lateinit var firebaseFirestore: FirebaseFirestore
+    private lateinit var firebaseRepository: FirebaseRepository
+
     private lateinit var section: Section
-    private lateinit var sectionName: EditText
     private var locations = mutableListOf<Location>()
+
+    private lateinit var sectionName: EditText
     private lateinit var locationList: RecyclerView
     private lateinit var locationAdapter: LocationAdapter
     private lateinit var addLocation: FloatingActionButton
+
     private lateinit var filepath: Uri
     private var currentPosition = -1
     private var currentId = ""
     val request = 1
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,20 +66,21 @@ class LocationFragment : Fragment() {
         firebaseAuth = FirebaseAuth.getInstance()
         firebaseStorage = FirebaseStorage.getInstance()
         firebaseFirestore = FirebaseFirestore.getInstance()
-        firebaseFirestore.collection("Section").get().addOnCompleteListener { task ->
+        firebaseFirestore.collection(SECTION).get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                section = task.result?.toObjects(Section::class.java)?.get(0) ?: Section("util")
+                section = task.result?.toObjects(Section::class.java)?.get(0)!!
                 sectionName.setText(section.name)
+                firebaseRepository = FirebaseRepository(section.id)
                 getLocations()
             } else {
-                sectionName.setText("ggg")
+                Log.d("MyLog", "No firestore connection")
             }
         }
 
         locationAdapter.setOnFocusChangedListener(object : LocationAdapter.OnFocusChangeListener {
             override fun onFocusChanged(position: Int, locationName: String) {
                 if (locationName != locations[position].name)
-                    saveLocationName(locations[position].id, locationName)
+                    firebaseRepository.saveLocationName(locations[position].id, locationName)
             }
         })
 
@@ -92,18 +95,18 @@ class LocationFragment : Fragment() {
         })
 
         sectionName.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                Toast.makeText(requireContext(), "focused", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(requireContext(), "focuse lose", Toast.LENGTH_SHORT).show()
+            if (!hasFocus) {
                 if (sectionName.text.toString() != section.name) {
-                    saveSectionName()
+                    firebaseRepository.saveSectionName(sectionName.text.toString())
                 }
             }
         }
 
         addLocation.setOnClickListener {
-            addLocation()
+            val location = Location()
+            locations.add(location)
+            firebaseRepository.addLocation(location)
+            updateView()
         }
     }
 
@@ -114,32 +117,16 @@ class LocationFragment : Fragment() {
         if (currentUser == null) {
             firebaseAuth.signInAnonymously()
         }
-
-    }
-
-    private fun addLocation() {
-        val location = Location()
-        locations.add(location)
-        firebaseFirestore.collection("Section")
-            .document(section.id)
-            .collection("Location")
-            .add(location)
-    }
-
-    private fun saveSectionName() {
-        firebaseFirestore.collection("Section").document(section.id).update(
-            "name", sectionName.text.toString()
-        )
     }
 
     private fun getLocations() {
-        firebaseFirestore.collection("Section").document(section.id).collection("Location").get()
+        firebaseFirestore.collection(SECTION).document(section.id).collection(LOCATION).get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     locations = task.result?.toObjects(Location::class.java)!!
                     setData()
                 } else {
-                    locations.add(Location("gg"))
+                    locations.add(Location())
                 }
             }
     }
@@ -147,15 +134,6 @@ class LocationFragment : Fragment() {
     private fun setData() {
         locationAdapter.setLocations(locations)
         locationAdapter.notifyDataSetChanged()
-    }
-
-    private fun saveLocationName(id: String, name: String) {
-        firebaseFirestore.collection("Section").document(section.id).collection("Location")
-            .document(
-                id
-            ).update(
-                "name", name
-            )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -172,15 +150,9 @@ class LocationFragment : Fragment() {
         val imageName = chooseNameFromFilepath()
         val imageRef = firebaseStorage.reference.child("images/${imageName}")
         locations[currentPosition].pictures.add(imageName)
-        addPictureRef(imageName)
+        firebaseRepository.addPictureRef(locations[currentPosition])
 
         imageRef.putFile(filepath)
-    }
-
-    private fun addPictureRef(imageName: String) {
-        locations[currentPosition].pictures.add(imageName)
-        firebaseFirestore.collection("Section").document(section.id).collection("Location")
-            .document(currentId).update("pictures", locations[currentPosition].pictures)
     }
 
     private fun chooseNameFromFilepath(): String {
@@ -188,4 +160,8 @@ class LocationFragment : Fragment() {
         return strList[strList.size - 1]
     }
 
+    private fun updateView() {
+        val ft: FragmentTransaction = requireFragmentManager().beginTransaction()
+        ft.detach(this).attach(this).commit()
+    }
 }

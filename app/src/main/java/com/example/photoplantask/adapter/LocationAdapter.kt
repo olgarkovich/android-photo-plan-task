@@ -1,4 +1,4 @@
-package com.example.photoplan.adapter
+package com.example.photoplantask.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.GridView
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.photoplantask.R
 import com.example.photoplantask.model.Location
@@ -20,6 +19,10 @@ class LocationAdapter : RecyclerView.Adapter<LocationAdapter.ViewHolder>() {
     private var focusChangeListener: OnFocusChangeListener? = null
     private lateinit var context: Context
 
+    fun setLocations(locations: List<Location>) {
+        list = locations
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
         val itemView: View =
@@ -31,7 +34,6 @@ class LocationAdapter : RecyclerView.Adapter<LocationAdapter.ViewHolder>() {
         val currentLocation = list[position]
         holder.locationName.setText(currentLocation.name)
         holder.gridView.adapter = PictureAdapter(context, currentLocation.pictures)
-
     }
 
     override fun getItemCount(): Int {
@@ -59,20 +61,11 @@ class LocationAdapter : RecyclerView.Adapter<LocationAdapter.ViewHolder>() {
 
             locationName.setOnFocusChangeListener { _, hasFocus ->
                 val position: Int = adapterPosition
-                if (hasFocus) {
-                    if (position in 0..itemCount) {
-                        Toast.makeText(itemView.context, "focuse loc", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-                    Toast.makeText(itemView.context, "focuse lose loc", Toast.LENGTH_SHORT).show()
+                if (!hasFocus) {
                     focusChangeListener?.onFocusChanged(position, locationName.text.toString())
                 }
             }
         }
-    }
-
-    fun setLocations(locations: List<Location>) {
-        list = locations
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
