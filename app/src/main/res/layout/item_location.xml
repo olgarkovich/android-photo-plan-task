@@ -7,24 +7,19 @@
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/transparent"
     app:cardCornerRadius="33dp"
-    app:cardElevation="10dp"
-    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="15dp"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/custom_rect"
-        android:columnCount="3"
-        android:orientation="horizontal"
-        android:rowCount="2">
+        android:background="@drawable/custom_rect">
 
         <EditText
             android:id="@+id/locationName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_columnSpan="2"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:background="@color/transparent"
@@ -37,14 +32,13 @@
 
         <ImageButton
             android:id="@+id/addPicture"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_row="0"
-            android:layout_column="2"
-            android:layout_marginTop="5dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginEnd="5dp"
             android:background="@color/transparent"
+            android:scaleType="fitXY"
             android:src="@drawable/add_picture"
+            app:layout_constraintBottom_toTopOf="@+id/pictureList"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,8 +53,23 @@
             android:numColumns="3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/locationName"
-            tools:listitem="@layout/item_picture"/>
+            app:layout_constraintTop_toBottomOf="@+id/locationName"/>
+
+        <Button
+            android:id="@+id/deletePicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/delete_btn"
+            android:fontFamily="@font/ubuntu"
+            android:paddingHorizontal="40dp"
+            android:paddingVertical="10dp"
+            android:text="@string/delete"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pictureList" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

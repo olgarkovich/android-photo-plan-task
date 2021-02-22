@@ -3,5 +3,6 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/oswald_light</item>
         <item>@font/ubuntu</item>
+        <item>@font/ubuntu_medium</item>
     </array>
 </resources>
