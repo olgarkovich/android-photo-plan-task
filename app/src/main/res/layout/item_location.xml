@@ -5,9 +5,9 @@
     android:id="@+id/cardView2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
     app:cardBackgroundColor="@color/transparent"
     app:cardCornerRadius="33dp"
-    android:layout_marginTop="15dp"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:background="@color/transparent"
             android:fontFamily="@font/ubuntu"
             android:hint="@string/name_locality"
@@ -46,34 +46,33 @@
             android:id="@+id/pictureList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:columnWidth="120dp"
-            android:verticalSpacing="15dp"
             android:horizontalSpacing="15dp"
             android:numColumns="3"
+            android:verticalSpacing="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/locationName"/>
+            app:layout_constraintTop_toBottomOf="@+id/locationName"
+            tools:listitem="@layout/item_picture"/>
 
-        <Button
-            android:id="@+id/deletePicture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/delete_btn"
-            android:fontFamily="@font/ubuntu"
-            android:paddingHorizontal="40dp"
-            android:paddingVertical="10dp"
-            android:text="@string/delete"
-            android:textSize="16sp"
-            android:layout_marginTop="10dp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pictureList" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <Button
+        android:id="@+id/deletePicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-10dp"
+        android:background="@drawable/delete_btn"
+        android:fontFamily="@font/ubuntu"
+        android:paddingHorizontal="40dp"
+        android:paddingVertical="10dp"
+        android:text="@string/delete"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+
 </androidx.cardview.widget.CardView>
-
-
-

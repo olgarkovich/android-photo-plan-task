@@ -14,7 +14,6 @@ import com.example.photoplantask.NextActivity
 import com.example.photoplantask.R
 import com.google.firebase.storage.FirebaseStorage
 
-
 class PictureAdapter(var context: Context, val list: ArrayList<String>) : BaseAdapter() {
 
     override fun getCount(): Int {
@@ -62,16 +61,6 @@ class PictureAdapter(var context: Context, val list: ArrayList<String>) : BaseAd
             checkDelete.visibility = View.VISIBLE
             return@setOnLongClickListener true
         }
-
-//        checkDelete.setOnClickListener {
-//            Toast.makeText(context, "check", Toast.LENGTH_SHORT).show()
-//            if (checkDelete.background == context.getDrawable(R.drawable.not_selected)) {
-//                checkDelete.setBackgroundResource(R.drawable.selected)
-//            }
-//            else {
-//                checkDelete.setBackgroundResource(R.drawable.not_selected)
-//            }
-//        }
 
         return view
     }

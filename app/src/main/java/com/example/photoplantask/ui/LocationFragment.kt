@@ -2,6 +2,7 @@ package com.example.photoplantask.ui
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -58,6 +59,7 @@ class LocationFragment : Fragment() {
 
         sectionName = view.findViewById(R.id.sectionName)
         addLocation = view.findViewById(R.id.addLocation)
+        addLocation.setColorFilter(Color.WHITE)
         locationList = view.findViewById(R.id.locationList)
         locationList.layoutManager = LinearLayoutManager(requireContext())
         locationAdapter = LocationAdapter()

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="100dp"
     android:layout_height="100dp"
     app:cardCornerRadius="23dp">
@@ -13,7 +14,9 @@
             android:id="@+id/pictureView"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:scaleType="fitXY" />
+            android:scaleType="centerCrop"
+            android:background="@drawable/placeholder_image"
+            tools:src="@tools:sample/avatars"/>
 
         <CheckBox
             android:id="@+id/checkDelete"

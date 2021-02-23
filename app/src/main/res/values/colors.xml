@@ -14,4 +14,5 @@
     <color name="light_blue">#EDF3F4</color>
     <color name="transparent">#00000000</color>
     <color name="red">#CE6666</color>
+    <color name="light_icon">#CFD2CC</color>
 </resources>
